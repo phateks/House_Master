@@ -13,7 +13,7 @@ modbus_controller:
   - id: ${thermo_id}_modbus
     modbus_id: modbus1
     address: ${thermo_address}
-    command_throttle: 200ms
+    command_throttle: 100ms
     setup_priority: -10
 
 # Sensors
@@ -89,7 +89,9 @@ climate:
     visual:
       min_temperature: 15 °C
       max_temperature: 35 °C
-      temperature_step: 0.5 °C
+      temperature_step:
+        target_temperature: 0.1 °C
+        current_temperature: 0.1 °C
     min_idle_time: 10s
     min_heating_off_time: 10s
     min_heating_run_time: 10s
