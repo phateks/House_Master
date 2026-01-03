@@ -1,0 +1,935 @@
+# ESPHome Hardware Definition Package
+# Conține toate definițiile hardware FIXE pentru placa Kincony A4S
+# Include: I2C, UART, Modbus, MCP23017, PCF8574, PCA9685, inputs, outputs, relays
+# Include acest fișier prin packages - hardware-ul este fix și nu se modifică
+
+# UART pentru Modbus (termostare)
+uart:
+  id: mod_bus
+  tx_pin: GPIO32
+  rx_pin: GPIO33
+  baud_rate: 9600
+  stop_bits: 1
+  debug:
+    direction: BOTH
+
+# Modbus hub
+modbus:
+  id: modbus1
+
+# I2C Bus Configuration
+i2c:
+  sda: 4
+  scl: 16
+  scan: true
+  id: bus_a
+
+# MCP23017 I/O Expanders (5 bucăți, 70 inputs disponibile)
+mcp23017:
+  - id: 'mcp1'
+    address: 0x20
+  - id: 'mcp2'
+    address: 0x21
+  - id: 'mcp3'
+    address: 0x23
+  - id: 'mcp4'
+    address: 0x25
+  - id: 'mcp5'
+    address: 0x26
+
+# PCF8574 I/O Expanders
+pcf8574:
+  - id: 'pcf8574_hub_out_1'  # pentru canale output 1-4 și inputs DI9-DI12
+    address: 0x24
+  - id: 'pcf8574_hub_in_1'   # pentru canale input 1-8
+    address: 0x22
+
+# PCA9685 PWM Driver (16 canale PWM pentru lumini 0-10V)
+pca9685:
+  frequency: 1000
+  address: 0x40
+  id: 'pca9685_hub'
+
+# PWM Outputs (16 canale - 0 la 15)
+output:
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM0"
+    channel: 0
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM1"
+    channel: 1
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM2"
+    channel: 2
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM3"
+    channel: 3
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM4"
+    channel: 4
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM5"
+    channel: 5
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM6"
+    channel: 6
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM7"
+    channel: 7
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM8"
+    channel: 8
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM9"
+    channel: 9
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM10"
+    channel: 10
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM11"
+    channel: 11
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM12"
+    channel: 12
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM13"
+    channel: 13
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM14"
+    channel: 14
+  - platform: pca9685
+    pca9685_id: 'pca9685_hub'
+    id: "PWM15"
+    channel: 15
+  
+  # Dummy output pentru termostate
+  - platform: gpio
+    pin: 27
+    id: dummy_switch
+
+# Light Entities (legate la PWM outputs)
+light:
+  - platform: monochromatic
+    name: "PWM Light 0"
+    output: PWM0
+    id: pwm_0
+  - platform: monochromatic
+    name: "PWM Light 1"
+    output: PWM1
+    id: pwm_1
+  - platform: monochromatic
+    name: "PWM Light 2"
+    output: PWM2
+    id: pwm_2
+  - platform: monochromatic
+    name: "PWM Light 3"
+    output: PWM3
+    id: pwm_3
+  - platform: monochromatic
+    name: "PWM Light 4"
+    output: PWM4
+    id: pwm_4
+  - platform: monochromatic
+    name: "PWM Light 5"
+    output: PWM5
+    id: pwm_5
+  - platform: monochromatic
+    name: "PWM Light 6"
+    output: PWM6
+    id: pwm_6
+  - platform: monochromatic
+    name: "PWM Light 7"
+    output: PWM7
+    id: pwm_7
+  - platform: monochromatic
+    name: "PWM Light 8"
+    output: PWM8
+    id: pwm_8
+  - platform: monochromatic
+    name: "PWM Light 9"
+    output: PWM9
+    id: pwm_9
+  - platform: monochromatic
+    name: "PWM Light 10"
+    output: PWM10
+    id: pwm_10
+  - platform: monochromatic
+    name: "PWM Light 11"
+    output: PWM11
+    id: pwm_11
+  - platform: monochromatic
+    name: "PWM Light 12"
+    output: PWM12
+    id: pwm_12
+  - platform: monochromatic
+    name: "PWM Light 13"
+    output: PWM13
+    id: pwm_13
+  - platform: monochromatic
+    name: "PWM Light 14"
+    output: PWM14
+    id: pwm_14
+  - platform: monochromatic
+    name: "PWM Light 15"
+    output: PWM15
+    id: pwm_15
+
+# Binary Sensors - Extension Inputs (ext_in1 până la ext_in70)
+binary_sensor:
+  # MCP1 - pins 14-8 (7 inputs) + pins 0-6 (7 inputs) = 14 inputs
+  - platform: gpio
+    name: "ext_in1"
+    id: ext_in1
+    pin:
+      mcp23xxx: mcp1
+      number: 14
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in2"
+    id: ext_in2
+    pin:
+      mcp23xxx: mcp1
+      number: 13
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in3"
+    id: ext_in3
+    pin:
+      mcp23xxx: mcp1
+      number: 12
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in4"
+    id: ext_in4
+    pin:
+      mcp23xxx: mcp1
+      number: 11
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in5"
+    id: ext_in5
+    pin:
+      mcp23xxx: mcp1
+      number: 10
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in6"
+    id: ext_in6
+    pin:
+      mcp23xxx: mcp1
+      number: 9
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in7"
+    id: ext_in7
+    pin:
+      mcp23xxx: mcp1
+      number: 8
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in8"
+    id: ext_in8
+    pin:
+      mcp23xxx: mcp1
+      number: 0
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in9"
+    id: ext_in9
+    pin:
+      mcp23xxx: mcp1
+      number: 1
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in10"
+    id: ext_in10
+    pin:
+      mcp23xxx: mcp1
+      number: 2
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in11"
+    id: ext_in11
+    pin:
+      mcp23xxx: mcp1
+      number: 3
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in12"
+    id: ext_in12
+    pin:
+      mcp23xxx: mcp1
+      number: 4
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in13"
+    id: ext_in13
+    pin:
+      mcp23xxx: mcp1
+      number: 5
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in14"
+    id: ext_in14
+    pin:
+      mcp23xxx: mcp1
+      number: 6
+      mode: INPUT
+      inverted: true
+
+  # MCP2 - pins 14-8 (7 inputs) + pins 0-6 (7 inputs) = 14 inputs
+  - platform: gpio
+    name: "ext_in15"
+    id: ext_in15
+    pin:
+      mcp23xxx: mcp2
+      number: 14
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in16"
+    id: ext_in16
+    pin:
+      mcp23xxx: mcp2
+      number: 13
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in17"
+    id: ext_in17
+    pin:
+      mcp23xxx: mcp2
+      number: 12
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in18"
+    id: ext_in18
+    pin:
+      mcp23xxx: mcp2
+      number: 11
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in19"
+    id: ext_in19
+    pin:
+      mcp23xxx: mcp2
+      number: 10
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in20"
+    id: ext_in20
+    pin:
+      mcp23xxx: mcp2
+      number: 9
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in21"
+    id: ext_in21
+    pin:
+      mcp23xxx: mcp2
+      number: 8
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in22"
+    id: ext_in22
+    pin:
+      mcp23xxx: mcp2
+      number: 0
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in23"
+    id: ext_in23
+    pin:
+      mcp23xxx: mcp2
+      number: 1
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in24"
+    id: ext_in24
+    pin:
+      mcp23xxx: mcp2
+      number: 2
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in25"
+    id: ext_in25
+    pin:
+      mcp23xxx: mcp2
+      number: 3
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in26"
+    id: ext_in26
+    pin:
+      mcp23xxx: mcp2
+      number: 4
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in27"
+    id: ext_in27
+    pin:
+      mcp23xxx: mcp2
+      number: 5
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in28"
+    id: ext_in28
+    pin:
+      mcp23xxx: mcp2
+      number: 6
+      mode: INPUT
+      inverted: true
+
+  # MCP3 - pins 14-8 (7 inputs) + pins 0-6 (7 inputs) = 14 inputs
+  - platform: gpio
+    name: "ext_in29"
+    id: ext_in29
+    pin:
+      mcp23xxx: mcp3
+      number: 14
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in30"
+    id: ext_in30
+    pin:
+      mcp23xxx: mcp3
+      number: 13
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in31"
+    id: ext_in31
+    pin:
+      mcp23xxx: mcp3
+      number: 12
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in32"
+    id: ext_in32
+    pin:
+      mcp23xxx: mcp3
+      number: 11
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in33"
+    id: ext_in33
+    pin:
+      mcp23xxx: mcp3
+      number: 10
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in34"
+    id: ext_in34
+    pin:
+      mcp23xxx: mcp3
+      number: 9
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in35"
+    id: ext_in35
+    pin:
+      mcp23xxx: mcp3
+      number: 8
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in36"
+    id: ext_in36
+    pin:
+      mcp23xxx: mcp3
+      number: 0
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in37"
+    id: ext_in37
+    pin:
+      mcp23xxx: mcp3
+      number: 1
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in38"
+    id: ext_in38
+    pin:
+      mcp23xxx: mcp3
+      number: 2
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in39"
+    id: ext_in39
+    pin:
+      mcp23xxx: mcp3
+      number: 3
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in40"
+    id: ext_in40
+    pin:
+      mcp23xxx: mcp3
+      number: 4
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in41"
+    id: ext_in41
+    pin:
+      mcp23xxx: mcp3
+      number: 5
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in42"
+    id: ext_in42
+    pin:
+      mcp23xxx: mcp3
+      number: 6
+      mode: INPUT
+      inverted: true
+
+  # MCP4 - pins 14-8 (7 inputs) + pins 0-6 (7 inputs) = 14 inputs
+  - platform: gpio
+    name: "ext_in43"
+    id: ext_in43
+    pin:
+      mcp23xxx: mcp4
+      number: 14
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in44"
+    id: ext_in44
+    pin:
+      mcp23xxx: mcp4
+      number: 13
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in45"
+    id: ext_in45
+    pin:
+      mcp23xxx: mcp4
+      number: 12
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in46"
+    id: ext_in46
+    pin:
+      mcp23xxx: mcp4
+      number: 11
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in47"
+    id: ext_in47
+    pin:
+      mcp23xxx: mcp4
+      number: 10
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in48"
+    id: ext_in48
+    pin:
+      mcp23xxx: mcp4
+      number: 9
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in49"
+    id: ext_in49
+    pin:
+      mcp23xxx: mcp4
+      number: 8
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in50"
+    id: ext_in50
+    pin:
+      mcp23xxx: mcp4
+      number: 0
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in51"
+    id: ext_in51
+    pin:
+      mcp23xxx: mcp4
+      number: 1
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in52"
+    id: ext_in52
+    pin:
+      mcp23xxx: mcp4
+      number: 2
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in53"
+    id: ext_in53
+    pin:
+      mcp23xxx: mcp4
+      number: 3
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in54"
+    id: ext_in54
+    pin:
+      mcp23xxx: mcp4
+      number: 4
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in55"
+    id: ext_in55
+    pin:
+      mcp23xxx: mcp4
+      number: 5
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in56"
+    id: ext_in56
+    pin:
+      mcp23xxx: mcp4
+      number: 6
+      mode: INPUT
+      inverted: true
+
+  # MCP5 - pins 14-8 (7 inputs) + pins 0-6 (7 inputs) = 14 inputs
+  - platform: gpio
+    name: "ext_in57"
+    id: ext_in57
+    pin:
+      mcp23xxx: mcp5
+      number: 14
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in58"
+    id: ext_in58
+    pin:
+      mcp23xxx: mcp5
+      number: 13
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in59"
+    id: ext_in59
+    pin:
+      mcp23xxx: mcp5
+      number: 12
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in60"
+    id: ext_in60
+    pin:
+      mcp23xxx: mcp5
+      number: 11
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in61"
+    id: ext_in61
+    pin:
+      mcp23xxx: mcp5
+      number: 10
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in62"
+    id: ext_in62
+    pin:
+      mcp23xxx: mcp5
+      number: 9
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in63"
+    id: ext_in63
+    pin:
+      mcp23xxx: mcp5
+      number: 8
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in64"
+    id: ext_in64
+    pin:
+      mcp23xxx: mcp5
+      number: 0
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in65"
+    id: ext_in65
+    pin:
+      mcp23xxx: mcp5
+      number: 1
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in66"
+    id: ext_in66
+    pin:
+      mcp23xxx: mcp5
+      number: 2
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in67"
+    id: ext_in67
+    pin:
+      mcp23xxx: mcp5
+      number: 3
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in68"
+    id: ext_in68
+    pin:
+      mcp23xxx: mcp5
+      number: 4
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in69"
+    id: ext_in69
+    pin:
+      mcp23xxx: mcp5
+      number: 5
+      mode: INPUT
+      inverted: true
+  - platform: gpio
+    name: "ext_in70"
+    id: ext_in70
+    pin:
+      mcp23xxx: mcp5
+      number: 6
+      mode: INPUT
+      inverted: true
+
+  # PCF8574 Inputs (inputs 1-8)
+  - platform: gpio
+    name: "a4s-input1"
+    id: a4s_input1
+    pin:
+      pcf8574: pcf8574_hub_in_1
+      number: 0
+      mode: INPUT
+      inverted: true
+
+  - platform: gpio
+    name: "a4s-input2"
+    id: a4s_input2
+    pin:
+      pcf8574: pcf8574_hub_in_1
+      number: 1
+      mode: INPUT
+      inverted: true
+
+  - platform: gpio
+    name: "a4s-input3"
+    pin:
+      pcf8574: pcf8574_hub_in_1
+      number: 2
+      mode: INPUT
+      inverted: true
+
+  - platform: gpio
+    name: "a4s-input4"
+    pin:
+      pcf8574: pcf8574_hub_in_1
+      number: 3
+      mode: INPUT
+      inverted: true
+
+  - platform: gpio
+    name: "a4s-input5"
+    pin:
+      pcf8574: pcf8574_hub_in_1
+      number: 4
+      mode: INPUT
+      inverted: true
+
+  - platform: gpio
+    name: "a4s-input6"
+    pin:
+      pcf8574: pcf8574_hub_in_1
+      number: 5
+      mode: INPUT
+      inverted: true
+
+  - platform: gpio
+    name: "a4s-input7"
+    id: a4s_input7
+    pin:
+      pcf8574: pcf8574_hub_in_1
+      number: 6
+      mode: INPUT
+      inverted: true
+
+  - platform: gpio
+    name: "a4s-input8"
+    pin:
+      pcf8574: pcf8574_hub_in_1
+      number: 7
+      mode: INPUT
+      inverted: true
+
+  # PCF8574 Inputs din zone output (inputs 9-12)
+  - platform: gpio
+    name: "a4s-input9"
+    pin:
+      pcf8574: pcf8574_hub_out_1
+      number: 4
+      mode: INPUT
+      inverted: true
+
+  - platform: gpio
+    name: "a4s-input10"
+    pin:
+      pcf8574: pcf8574_hub_out_1
+      number: 5
+      mode: INPUT
+      inverted: true
+
+  - platform: gpio
+    name: "a4s-input11"
+    pin:
+       pcf8574: pcf8574_hub_out_1
+       number: 6
+       mode: INPUT
+       inverted: true
+
+  - platform: gpio
+    name: "a4s-input12"
+    pin:
+      pcf8574: pcf8574_hub_out_1
+      number: 7
+      mode: INPUT
+      inverted: true
+
+# Switch Outputs (PCF8574)
+switch:
+  # Kincony A4S onboard relays (4 bucăți pe GPIO-uri dedicate)
+  - platform: gpio
+    name: "Relay 1"
+    id: relay1
+    pin:
+      number: GPIO2
+      mode: OUTPUT
+      inverted: false
+
+  - platform: gpio
+    name: "Relay 2"
+    id: relay2
+    pin:
+      number: GPIO15
+      mode: OUTPUT
+      inverted: false
+
+  - platform: gpio
+    name: "Relay 3"
+    id: relay3
+    pin:
+      number: GPIO14
+      mode: OUTPUT
+      inverted: false
+
+  - platform: gpio
+    name: "Relay 4"
+    id: relay4
+    pin:
+      number: GPIO13
+      mode: OUTPUT
+      inverted: false
+
+  # PCF8574 Light Switches (4 bucăți)
+  - platform: gpio
+    name: "Light 1 Switch"
+    id: light1
+    pin:
+      pcf8574: pcf8574_hub_out_1
+      number: 0
+      mode: OUTPUT
+      inverted: true
+
+  - platform: gpio
+    name: "Light 2 Switch"
+    id: light2
+    pin:
+      pcf8574: pcf8574_hub_out_1
+      number: 1
+      mode: OUTPUT
+      inverted: true
+      
+  - platform: gpio
+    name: "Light 3 Switch"
+    id: light3
+    pin:
+      pcf8574: pcf8574_hub_out_1
+      number: 2
+      mode: OUTPUT
+      inverted: true
+      
+  - platform: gpio
+    name: "Light 4 Switch"
+    id: light4
+    pin:
+      pcf8574: pcf8574_hub_out_1
+      number: 3
+      mode: OUTPUT
+      inverted: true

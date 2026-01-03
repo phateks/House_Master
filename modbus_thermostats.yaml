@@ -1,0 +1,116 @@
+# ESPHome Modular Thermostat Configuration Package
+# This package defines a single modbus thermostat configuration
+# Use substitutions to configure each instance
+
+substitutions:
+  # These must be set when including this package
+  thermo_id: "thermo"           # Base ID for all components (e.g., thermo_02, thermo_03)
+  thermo_name: "Thermostat"     # Friendly name (e.g., "Bedroom Thermostat")
+  thermo_address: "2"           # Modbus address (2, 3, 4, etc.)
+
+# Modbus Controller for this thermostat
+modbus_controller:
+  - id: ${thermo_id}_modbus
+    modbus_id: modbus1
+    address: ${thermo_address}
+    command_throttle: 200ms
+    setup_priority: -10
+
+# Sensors
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: ${thermo_id}_modbus
+    id: ${thermo_id}_room_temp
+    name: "${thermo_name} Room Temperature"
+    address: 0x0006
+    register_type: holding
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - lambda: return x * 0.1;
+
+  - platform: modbus_controller
+    modbus_controller_id: ${thermo_id}_modbus
+    id: ${thermo_id}_target_temp
+    name: "${thermo_name} Target Temperature"
+    address: 0x0004
+    register_type: holding
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - lambda: return x * 0.1;
+    internal: true
+
+# Number component for setting temperature
+number:
+  - platform: modbus_controller
+    modbus_controller_id: ${thermo_id}_modbus
+    id: ${thermo_id}_set_temp
+    name: "${thermo_name} Set Temperature"
+    address: 0x0004
+    register_type: holding
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    min_value: 15
+    max_value: 35
+    step: 0.1
+    multiply: 10
+    on_value:
+      - climate.control:
+          id: ${thermo_id}_climate
+          target_temperature: !lambda return x;
+    internal: true
+
+# Switch for on/off control
+switch:
+  - platform: modbus_controller
+    modbus_controller_id: ${thermo_id}_modbus
+    id: ${thermo_id}_state
+    address: 0x0000
+    register_type: holding
+    bitmask: 1
+    on_turn_on:
+      - climate.control:
+          id: ${thermo_id}_climate
+          mode: "HEAT"
+    on_turn_off:
+      - climate.control:
+          id: ${thermo_id}_climate
+          mode: "OFF"
+
+# Climate component
+climate:
+  - platform: thermostat
+    id: ${thermo_id}_climate
+    name: "${thermo_name}"
+    sensor: ${thermo_id}_room_temp
+    visual:
+      min_temperature: 15 °C
+      max_temperature: 35 °C
+      temperature_step: 0.5 °C
+    min_idle_time: 10s
+    min_heating_off_time: 10s
+    min_heating_run_time: 10s
+    heat_overrun: 0.1
+    heat_deadband: 0.2
+    heat_action:
+      - delay: 10ms
+    idle_action:
+      - delay: 10ms
+    on_control:
+      - lambda: |-
+          auto target = x.get_target_temperature();
+          if (target.has_value() && (*target != id(${thermo_id}_set_temp).state))
+            id(${thermo_id}_set_temp).make_call().set_value(*target).perform();
+          auto state = x.get_mode();
+          if (state.has_value()) {
+            bool onoff = *state != climate::CLIMATE_MODE_OFF;
+            if (onoff != id(${thermo_id}_state).state) {
+              if (onoff)
+                id(${thermo_id}_state).turn_on();
+              else
+                id(${thermo_id}_state).turn_off();
+            }
+          }

@@ -1,0 +1,74 @@
+# ESPHome Modular I/O Extension Package
+# Leagă 2 inputuri predefinite (ext_in) cu 1 dimmer/lumină predefinită
+# Nu creează hardware - doar automatizări între entități existente
+
+substitutions:
+  # Alegi ORICE 2 inputuri din cele predefinite (ext_in1 - ext_in70)
+  input_id_up: "ext_in1"         # ID-ul input-ului pentru DIM UP (ex: ext_in23)
+  input_id_down: "ext_in2"       # ID-ul input-ului pentru DIM DOWN (ex: ext_in24)
+  
+  # Alegi ORICE lumină/dimmer predefinit
+  light_id: "pwm_0"              # ID-ul luminii/dimmer-ului existent (ex: pwm_0, dimmer_10, etc.)
+  
+  # Configurări dimming (opțional)
+  dim_step: "5%"                 # Pasul de dimming (recomandat: 5%)
+  dim_delay: "0.1s"              # Delay între pași (recomandat: 0.1s)
+
+# Automation: Input UP - Toggle + Dim UP
+binary_sensor:
+  - platform: template
+    id: ${input_id_up}_${light_id}_automation
+    internal: true
+    on_click:
+      # Click scurt (50-350ms) = Toggle
+      min_length: 50ms
+      max_length: 350ms
+      then:
+        - light.toggle: ${light_id}
+    on_press:
+      # Apăsare lungă = Dim UP continuu
+      then:
+        - if:
+            condition:
+              light.is_on: ${light_id}
+            then:
+              - while:
+                  condition:
+                    binary_sensor.is_on: ${input_id_up}
+                  then:
+                    - light.dim_relative:
+                        id: ${light_id}
+                        relative_brightness: ${dim_step}
+                        transition_length: ${dim_delay}
+                    - delay: ${dim_delay}
+    lambda: |-
+      return id(${input_id_up}).state;
+
+  # Automation: Input DOWN - Toggle + Dim DOWN
+  - platform: template
+    id: ${input_id_down}_${light_id}_automation
+    internal: true
+    on_click:
+      # Click scurt (50-350ms) = Toggle
+      min_length: 50ms
+      max_length: 350ms
+      then:
+        - light.toggle: ${light_id}
+    on_press:
+      # Apăsare lungă = Dim DOWN continuu
+      then:
+        - if:
+            condition:
+              light.is_on: ${light_id}
+            then:
+              - while:
+                  condition:
+                    binary_sensor.is_on: ${input_id_down}
+                  then:
+                    - light.dim_relative:
+                        id: ${light_id}
+                        relative_brightness: -${dim_step}
+                        transition_length: ${dim_delay}
+                    - delay: ${dim_delay}
+    lambda: |-
+      return id(${input_id_down}).state;
