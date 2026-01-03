@@ -33,7 +33,11 @@ The [hardware.yaml](hardware.yaml) file defines all physical components of the K
 ```yaml
 # In house_master.yaml
 packages:
-  hardware: !include hardware.yaml
+  remote_packages:
+    url: https://github.com/phateks/House_Master
+    ref: main
+    files:
+      - hardware.yaml
 ```
 
 ## Configuration Layer (FLEXIBLE)
@@ -55,14 +59,18 @@ The I/O extension package **connects** 2 existing input sensors to 1 existing li
 
 ```yaml
 packages:
-  living_light: !include
-    file: io_extension.yaml
-    vars:
-      input_id_up: "ext_in23"      # Choose ANY input for dim up
-      input_id_down: "ext_in24"    # Choose ANY input for dim down
-      light_id: "pwm_0"            # Choose ANY existing light
-      dim_step: "5%"               # Optional: dimming step size
-      dim_delay: "0.1s"            # Optional: delay between steps
+  remote_packages:
+    url: https://github.com/phateks/House_Master
+    ref: main
+    files:
+      - hardware.yaml
+      - path: io_extension.yaml
+        vars:
+          input_id_up: "ext_in23"      # Choose ANY input for dim up
+          input_id_down: "ext_in24"    # Choose ANY input for dim down
+          light_id: "pwm_0"            # Choose ANY existing light
+          dim_step: "5%"               # Optional: dimming step size
+          dim_delay: "200ms"           # Optional: delay between steps
 ```
 
 ### Parameters:
@@ -76,46 +84,59 @@ packages:
 
 ```yaml
 packages:
-  # Living room: ext_in23 & ext_in24 control pwm_0
-  living_light: !include
-    file: io_extension.yaml
-    vars:
-      input_id_up: "ext_in23"
-      input_id_down: "ext_in24"
-      light_id: "pwm_0"
-  
-  # Bedroom: ext_in1 & ext_in2 control pwm_1
-  bedroom_light: !include
-    file: io_extension.yaml
-    vars:
-      input_id_up: "ext_in1"
-      input_id_down: "ext_in2"
-      light_id: "pwm_1"
-  
-  # Kitchen: ext_in45 & ext_in46 control a4s_color_led_7
-  kitchen_light: !include
-    file: io_extension.yaml
-    vars:
-      input_id_up: "ext_in45"
-      input_id_down: "ext_in46"
-      light_id: "a4s_color_led_7"
-      dim_step: "3%"               # Finer dimming control
+  remote_packages:
+    url: https://github.com/phateks/House_Master
+    ref: main
+    files:
+      - hardware.yaml
+      
+      # Living room: ext_in23 & ext_in24 control pwm_0
+      - path: io_extension.yaml
+        vars:
+          input_id_up: "ext_in23"
+          input_id_down: "ext_in24"
+          light_id: "pwm_0"
+          dim_step: "5%"
+          dim_delay: "200ms"
+      
+      # Bedroom: ext_in1 & ext_in2 control pwm_1
+      - path: io_extension.yaml
+        vars:
+          input_id_up: "ext_in1"
+          input_id_down: "ext_in2"
+          light_id: "pwm_1"
+          dim_step: "5%"
+          dim_delay: "200ms"
+      
+      # Kitchen: ext_in45 & ext_in46 control pwm_7
+      - path: io_extension.yaml
+        vars:
+          input_id_up: "ext_in45"
+          input_id_down: "ext_in46"
+          light_id: "pwm_7"
+          dim_step: "3%"
+          dim_delay: "200ms"
 ```
 
 **Key Advantage**: Total flexibility! You can choose ANY 2 inputs from your 70 available inputs and connect them to ANY light. No need to follow a specific pin mapping.
 
 ## Adding New Thermostats
 
-The thermostat configuration is fully modular. To add a new thermostat, simply add a new package entry in `house_master.yaml`:
+The thermostat configuration is fully modular. To add a new thermostat, simply add it to the files list:
 
 ```yaml
 packages:
-  thermostat_05: !include
-    file: modbus_thermostats.yaml
-    vars:
-      thermo_id: "thermo_05"
-      thermo_name: "Bathroom Thermostat"
-      thermo_address: "5"
+  remote_packages:
+    url: https://github.com/phateks/House_Master
+    ref: main
+    files:
+      - hardware.yaml
+      
+      - path: modbus_thermostats.yaml
+        vars:
+          thermo_id: "bathroom"
+          thermo_name: "Bathroom Thermostat"
+          thermo_address: "5"
 ```
 
 ### Parameters:
@@ -127,38 +148,33 @@ packages:
 
 To use these modular configurations directly from GitHub in another ESPHome project:
 
-### Hardware (complete hardware layer):
 ```yaml
 packages:
-  hardware: !include
-    github://YOUR_USERNAME/House_Master/hardware.yaml@main
+  remote_packages:
+    url: https://github.com/phateks/House_Master
+    ref: main
+    files:
+      # Hardware (complete hardware layer)
+      - hardware.yaml
+      
+      # Thermostat with custom parameters
+      - path: modbus_thermostats.yaml
+        vars:
+          thermo_id: "bedroom"
+          thermo_name: "Bedroom Thermostat"
+          thermo_address: "2"
+      
+      # I/O Extension (Light Control)
+      - path: io_extension.yaml
+        vars:
+          input_id_up: "ext_in1"
+          input_id_down: "ext_in2"
+          light_id: "pwm_0"
+          dim_step: "5%"
+          dim_delay: "200ms"
 ```
 
-### Thermostats:
-```yaml
-packages:
-  thermostat_bedroom: !include
-    github://YOUR_USERNAME/House_Master/modbus_thermostats.yaml@main
-    vars:
-      thermo_id: "thermo_bedroom"
-      thermo_name: "Bedroom Thermostat"
-      thermo_address: "2"
-```
-
-### I/O Extensions (Light Controls):
-```yaml
-packages:
-  bedroom_light: !include
-    github://YOUR_USERNAME/House_Master/io_extension.yaml@main
-    vars:
-      input_id_up: "ext_in23"
-      input_id_down: "ext_in24"
-      light_id: "pwm_0"
-      dim_step: "5%"
-      dim_delay: "0.1s"
-```
-
-Replace `YOUR_USERNAME` with your GitHub username and `main` with your branch name.
+Replace `phateks` with your GitHub username and `main` with your branch name.
 
 ## Thermostat Features
 
@@ -179,59 +195,46 @@ Each I/O extension package creates automation logic that:
 - **Configurable Dimming** - Adjustable step size and speed
 - **Maximum Flexibility** - Choose ANY inputs (from ext_in1 to ext_in70) and ANY light
 
-## Example: Adding 7 More Thermostats
+## Example: Adding Multiple Thermostats
 
 ```yaml
 packages:
-  # Existing thermostats
-  thermostat_02: !include
-    file: modbus_thermostats.yaml
-    vars:
-      thermo_id: "thermo_02"
-      thermo_name: "Bedroom 1"
-      thermo_address: "2"
-  
-  thermostat_03: !include
-    file: modbus_thermostats.yaml
-    vars:
-      thermo_id: "thermo_03"
-      thermo_name: "Living Room"
-      thermo_address: "3"
-  
-  thermostat_04: !include
-    file: modbus_thermostats.yaml
-    vars:
-      thermo_id: "thermo_04"
-      thermo_name: "Kitchen"
-      thermo_address: "4"
-  
-  # New thermostats
-  thermostat_05: !include
-    file: modbus_thermostats.yaml
-    vars:
-      thermo_id: "thermo_05"
-      thermo_name: "Bedroom 2"
-      thermo_address: "5"
-  
-  thermostat_06: !include
-    file: modbus_thermostats.yaml
-    vars:
-      thermo_id: "thermo_06"
-      thermo_name: "Bathroom"
-      thermo_address: "6"
-  
-  thermostat_07: !include
-    file: modbus_thermostats.yaml
-    vars:
-      thermo_id: "thermo_07"
-      thermo_name: "Office"
-      thermo_address: "7"
-  
-  thermostat_08: !include
-    file: modbus_thermostats.yaml
-    vars:
-      thermo_id: "thermo_08"
-      thermo_name: "Guest Room"
+  remote_packages:
+    url: https://github.com/phateks/House_Master
+    ref: main
+    files:
+      - hardware.yaml
+      
+      # Thermostat 1 - Bedroom
+      - path: modbus_thermostats.yaml
+        vars:
+          thermo_id: "bedroom"
+          thermo_name: "Bedroom Thermostat"
+          thermo_address: "2"
+      
+      # Thermostat 2 - Living Room
+      - path: modbus_thermostats.yaml
+        vars:
+          thermo_id: "living"
+          thermo_name: "Living Room Thermostat"
+          thermo_address: "3"
+      
+      # Thermostat 3 - Kitchen
+      - path: modbus_thermostats.yaml
+        vars:
+          thermo_id: "kitchen"
+          thermo_name: "Kitchen Thermostat"
+          thermo_address: "4"
+      
+      # Thermostat 4 - Bathroom
+      - path: modbus_thermostats.yaml
+        vars:
+          thermo_id: "bathroom"
+          thermo_name: "Bathroom Thermostat"
+          thermo_address: "5"
+      
+      # Add as many as you need, just change thermo_id and thermo_address
+```
       thermo_address: "8"
   
   thermostat_09: !include
@@ -244,16 +247,7 @@ packages:
   thermostat_10: !include
     file: modbus_thermostats.yaml
     vars:
-      thermo_id: "thermo_10"
-      thermo_name: "Garage"
-      thermo_address: "10"
-  
-  thermostat_11: !include
-    file: modbus_thermostats.yaml
-    vars:
-      thermo_id: "thermo_11"
-      thermo_name: "Attic"
-      thermo_address: "11"
+      # Add as many as you need, just change thermo_id and thermo_address
 ```
 
 ## Hardware Configuration
@@ -273,9 +267,10 @@ packages:
 
 ## Notes
 - Each thermostat package is completely self-contained
-- No conflicts between thermostats - each has unique IDs
+- No conflicts between thermostats - each has unique IDs (thermo_id must be unique!)
 - Easy to add or remove thermostats without touching existing code
 - All settings (min/max temp, step size, etc.) can be customized per thermostat if needed
+- Same file (io_extension.yaml or modbus_thermostats.yaml) can be used multiple times with different vars
 
 ## License
 MIT
