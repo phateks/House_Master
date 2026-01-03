@@ -200,6 +200,7 @@ binary_sensor:
       number: 14
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in2"
     id: ext_in2
@@ -208,6 +209,7 @@ binary_sensor:
       number: 13
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in3"
     id: ext_in3
@@ -216,6 +218,7 @@ binary_sensor:
       number: 12
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in4"
     id: ext_in4
@@ -224,6 +227,7 @@ binary_sensor:
       number: 11
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in5"
     id: ext_in5
@@ -232,6 +236,7 @@ binary_sensor:
       number: 10
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in6"
     id: ext_in6
@@ -240,6 +245,7 @@ binary_sensor:
       number: 9
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in7"
     id: ext_in7
@@ -248,6 +254,7 @@ binary_sensor:
       number: 8
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in8"
     id: ext_in8
@@ -256,6 +263,7 @@ binary_sensor:
       number: 0
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in9"
     id: ext_in9
@@ -264,6 +272,7 @@ binary_sensor:
       number: 1
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in10"
     id: ext_in10
@@ -272,6 +281,7 @@ binary_sensor:
       number: 2
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in11"
     id: ext_in11
@@ -280,6 +290,7 @@ binary_sensor:
       number: 3
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in12"
     id: ext_in12
@@ -288,6 +299,7 @@ binary_sensor:
       number: 4
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in13"
     id: ext_in13
@@ -296,6 +308,7 @@ binary_sensor:
       number: 5
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in14"
     id: ext_in14
@@ -304,6 +317,7 @@ binary_sensor:
       number: 6
       mode: INPUT
       inverted: true
+    internal: true  
 
   # MCP2 - pins 14-8 (7 inputs) + pins 0-6 (7 inputs) = 14 inputs
   - platform: gpio
@@ -314,6 +328,7 @@ binary_sensor:
       number: 14
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in16"
     id: ext_in16
@@ -322,6 +337,7 @@ binary_sensor:
       number: 13
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in17"
     id: ext_in17
@@ -330,6 +346,7 @@ binary_sensor:
       number: 12
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in18"
     id: ext_in18
@@ -338,6 +355,7 @@ binary_sensor:
       number: 11
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in19"
     id: ext_in19
@@ -346,6 +364,7 @@ binary_sensor:
       number: 10
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in20"
     id: ext_in20
@@ -354,6 +373,7 @@ binary_sensor:
       number: 9
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in21"
     id: ext_in21
@@ -362,6 +382,7 @@ binary_sensor:
       number: 8
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in22"
     id: ext_in22
@@ -370,6 +391,7 @@ binary_sensor:
       number: 0
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in23"
     id: ext_in23
@@ -378,6 +400,7 @@ binary_sensor:
       number: 1
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in24"
     id: ext_in24
@@ -386,6 +409,7 @@ binary_sensor:
       number: 2
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in25"
     id: ext_in25
@@ -394,6 +418,7 @@ binary_sensor:
       number: 3
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in26"
     id: ext_in26
@@ -402,6 +427,7 @@ binary_sensor:
       number: 4
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in27"
     id: ext_in27
@@ -409,7 +435,8 @@ binary_sensor:
       mcp23xxx: mcp2
       number: 5
       mode: INPUT
-      inverted: true
+      inverted: true 
+    internal: true
   - platform: gpio
     name: "ext_in28"
     id: ext_in28
@@ -418,6 +445,7 @@ binary_sensor:
       number: 6
       mode: INPUT
       inverted: true
+    internal: true
 
   # MCP3 - pins 14-8 (7 inputs) + pins 0-6 (7 inputs) = 14 inputs
   - platform: gpio
@@ -428,6 +456,7 @@ binary_sensor:
       number: 14
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in30"
     id: ext_in30
@@ -436,6 +465,7 @@ binary_sensor:
       number: 13
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in31"
     id: ext_in31
@@ -444,6 +474,7 @@ binary_sensor:
       number: 12
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in32"
     id: ext_in32
@@ -452,6 +483,7 @@ binary_sensor:
       number: 11
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in33"
     id: ext_in33
@@ -460,6 +492,7 @@ binary_sensor:
       number: 10
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in34"
     id: ext_in34
@@ -476,6 +509,7 @@ binary_sensor:
       number: 8
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in36"
     id: ext_in36
@@ -484,6 +518,7 @@ binary_sensor:
       number: 0
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in37"
     id: ext_in37
@@ -492,6 +527,7 @@ binary_sensor:
       number: 1
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in38"
     id: ext_in38
@@ -500,6 +536,7 @@ binary_sensor:
       number: 2
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in39"
     id: ext_in39
@@ -508,6 +545,7 @@ binary_sensor:
       number: 3
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in40"
     id: ext_in40
@@ -516,6 +554,7 @@ binary_sensor:
       number: 4
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in41"
     id: ext_in41
@@ -524,6 +563,7 @@ binary_sensor:
       number: 5
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in42"
     id: ext_in42
@@ -532,6 +572,7 @@ binary_sensor:
       number: 6
       mode: INPUT
       inverted: true
+    internal: true
 
   # MCP4 - pins 14-8 (7 inputs) + pins 0-6 (7 inputs) = 14 inputs
   - platform: gpio
@@ -542,6 +583,7 @@ binary_sensor:
       number: 14
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in44"
     id: ext_in44
@@ -550,6 +592,7 @@ binary_sensor:
       number: 13
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in45"
     id: ext_in45
@@ -558,6 +601,7 @@ binary_sensor:
       number: 12
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in46"
     id: ext_in46
@@ -566,6 +610,7 @@ binary_sensor:
       number: 11
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in47"
     id: ext_in47
@@ -574,6 +619,7 @@ binary_sensor:
       number: 10
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in48"
     id: ext_in48
@@ -582,6 +628,7 @@ binary_sensor:
       number: 9
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in49"
     id: ext_in49
@@ -590,6 +637,7 @@ binary_sensor:
       number: 8
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in50"
     id: ext_in50
@@ -598,6 +646,7 @@ binary_sensor:
       number: 0
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in51"
     id: ext_in51
@@ -606,6 +655,7 @@ binary_sensor:
       number: 1
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in52"
     id: ext_in52
@@ -614,6 +664,7 @@ binary_sensor:
       number: 2
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in53"
     id: ext_in53
@@ -622,6 +673,7 @@ binary_sensor:
       number: 3
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in54"
     id: ext_in54
@@ -630,6 +682,7 @@ binary_sensor:
       number: 4
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in55"
     id: ext_in55
@@ -638,6 +691,7 @@ binary_sensor:
       number: 5
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in56"
     id: ext_in56
@@ -646,6 +700,7 @@ binary_sensor:
       number: 6
       mode: INPUT
       inverted: true
+    internal: true
 
   # MCP5 - pins 14-8 (7 inputs) + pins 0-6 (7 inputs) = 14 inputs
   - platform: gpio
@@ -656,6 +711,7 @@ binary_sensor:
       number: 14
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in58"
     id: ext_in58
@@ -664,6 +720,7 @@ binary_sensor:
       number: 13
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in59"
     id: ext_in59
@@ -672,6 +729,7 @@ binary_sensor:
       number: 12
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in60"
     id: ext_in60
@@ -680,6 +738,7 @@ binary_sensor:
       number: 11
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in61"
     id: ext_in61
@@ -688,6 +747,7 @@ binary_sensor:
       number: 10
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in62"
     id: ext_in62
@@ -696,6 +756,7 @@ binary_sensor:
       number: 9
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in63"
     id: ext_in63
@@ -704,6 +765,7 @@ binary_sensor:
       number: 8
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in64"
     id: ext_in64
@@ -712,6 +774,7 @@ binary_sensor:
       number: 0
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in65"
     id: ext_in65
@@ -720,6 +783,7 @@ binary_sensor:
       number: 1
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in66"
     id: ext_in66
@@ -728,6 +792,7 @@ binary_sensor:
       number: 2
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in67"
     id: ext_in67
@@ -736,6 +801,7 @@ binary_sensor:
       number: 3
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in68"
     id: ext_in68
@@ -744,6 +810,7 @@ binary_sensor:
       number: 4
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in69"
     id: ext_in69
@@ -752,6 +819,7 @@ binary_sensor:
       number: 5
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in70"
     id: ext_in70
@@ -760,6 +828,7 @@ binary_sensor:
       number: 6
       mode: INPUT
       inverted: true
+    internal: true
 
   # PCF8574 Inputs (inputs 1-8)
   - platform: gpio
@@ -770,6 +839,7 @@ binary_sensor:
       number: 0
       mode: INPUT
       inverted: true
+    internal: true
 
   - platform: gpio
     name: "a4s-input2"
@@ -779,6 +849,7 @@ binary_sensor:
       number: 1
       mode: INPUT
       inverted: true
+    internal: true
 
   - platform: gpio
     name: "a4s-input3"
@@ -787,6 +858,7 @@ binary_sensor:
       number: 2
       mode: INPUT
       inverted: true
+    internal: true
 
   - platform: gpio
     name: "a4s-input4"
@@ -795,6 +867,7 @@ binary_sensor:
       number: 3
       mode: INPUT
       inverted: true
+    internal: true
 
   - platform: gpio
     name: "a4s-input5"
@@ -803,6 +876,7 @@ binary_sensor:
       number: 4
       mode: INPUT
       inverted: true
+    internal: true
 
   - platform: gpio
     name: "a4s-input6"
@@ -811,6 +885,7 @@ binary_sensor:
       number: 5
       mode: INPUT
       inverted: true
+    internal: true
 
   - platform: gpio
     name: "a4s-input7"
@@ -820,6 +895,7 @@ binary_sensor:
       number: 6
       mode: INPUT
       inverted: true
+    internal: true
 
   - platform: gpio
     name: "a4s-input8"
@@ -828,6 +904,7 @@ binary_sensor:
       number: 7
       mode: INPUT
       inverted: true
+    internal: true
 
   # PCF8574 Inputs din zone output (inputs 9-12)
   - platform: gpio
@@ -837,6 +914,7 @@ binary_sensor:
       number: 4
       mode: INPUT
       inverted: true
+    internal: true
 
   - platform: gpio
     name: "a4s-input10"
@@ -845,6 +923,7 @@ binary_sensor:
       number: 5
       mode: INPUT
       inverted: true
+    internal: true
 
   - platform: gpio
     name: "a4s-input11"
@@ -853,6 +932,7 @@ binary_sensor:
        number: 6
        mode: INPUT
        inverted: true
+    internal: true
 
   - platform: gpio
     name: "a4s-input12"
@@ -860,43 +940,11 @@ binary_sensor:
       pcf8574: pcf8574_hub_out_1
       number: 7
       mode: INPUT
-      inverted: true
+      inverted: true 
+    internal: true
 
 # Switch Outputs (PCF8574)
 switch:
-  # Kincony A4S onboard relays (4 bucăți pe GPIO-uri dedicate)
-  - platform: gpio
-    name: "Relay 1"
-    id: relay1
-    pin:
-      number: GPIO2
-      mode: OUTPUT
-      inverted: false
-
-  - platform: gpio
-    name: "Relay 2"
-    id: relay2
-    pin:
-      number: GPIO15
-      mode: OUTPUT
-      inverted: false
-
-  - platform: gpio
-    name: "Relay 3"
-    id: relay3
-    pin:
-      number: GPIO14
-      mode: OUTPUT
-      inverted: false
-
-  - platform: gpio
-    name: "Relay 4"
-    id: relay4
-    pin:
-      number: GPIO13
-      mode: OUTPUT
-      inverted: false
-
   # PCF8574 Light Switches (4 bucăți)
   - platform: gpio
     name: "Light 1 Switch"
