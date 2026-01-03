@@ -501,6 +501,7 @@ binary_sensor:
       number: 9
       mode: INPUT
       inverted: true
+    internal: true
   - platform: gpio
     name: "ext_in35"
     id: ext_in35
